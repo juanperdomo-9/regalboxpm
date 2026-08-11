@@ -1,0 +1,183 @@
+/* ==========================================
+   REGALBOX DESIGN SYSTEM
+   Version 1.0
+========================================== */
+
+:root {
+
+    /* Brand */
+
+    --primary: #111111;
+    --secondary: #71717a;
+
+    /* Backgrounds */
+
+    --background: #ffffff;
+    --surface: #fafafa;
+    --surface-soft: #f4f4f5;
+
+    /* Borders */
+
+    --border: #e5e7eb;
+
+    /* Radius */
+
+    --radius-sm: 14px;
+    --radius-md: 22px;
+    --radius-lg: 32px;
+
+    /* Shadow */
+
+    --shadow-sm:
+        0 2px 8px rgba(0, 0, 0, .03);
+
+    --shadow:
+        0 10px 40px rgba(0, 0, 0, .05);
+
+}
+
+/* RESET */
+
+* {
+
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+html {
+
+    scroll-behavior: smooth;
+
+}
+
+body {
+
+    background: var(--background);
+
+    color: var(--primary);
+
+    overflow-x: hidden;
+
+    font-family:
+        Inter,
+        system-ui,
+        sans-serif;
+
+    text-rendering: optimizeLegibility;
+
+    -webkit-font-smoothing: antialiased;
+
+}
+
+/* LINKS */
+
+a {
+
+    color: inherit;
+
+    text-decoration: none;
+
+}
+
+/* IMAGES */
+
+img {
+
+    display: block;
+
+    width: 100%;
+
+}
+
+/* BUTTON */
+
+button {
+
+    cursor: pointer;
+
+    font: inherit;
+
+}
+
+/* INPUT */
+
+input,
+textarea,
+select {
+
+    font: inherit;
+
+    outline: none;
+
+}
+
+/* SCROLLBAR */
+
+::-webkit-scrollbar {
+
+    width: 10px;
+
+}
+
+::-webkit-scrollbar-thumb {
+
+    background: #d4d4d8;
+
+    border-radius: 100px;
+
+}
+
+::-webkit-scrollbar-track {
+
+    background: white;
+
+}
+
+/* Selection */
+
+::selection {
+
+    background: #18181b;
+
+    color: white;
+
+}
+
+body {
+    font-family: "Inter", sans-serif;
+}
+
+.font-display {
+    font-family: "Cormorant Garamond", serif;
+}
+
+.font-display {
+    font-family: "Cormorant Garamond", serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #fff;
+    color: #18181b;
+}
+
+section {
+    position: relative;
+}
+
+img {
+    transition: all .6s ease;
+}
+
+a {
+    transition: all .25s ease;
+}
+
+button {
+    transition: all .25s ease;
+}

@@ -1,0 +1,1445 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color"
+          content="#ffffff">
+
+    <link rel="icon" href="{% static 'img/favicon.svg' %}" type="image/svg+xml">
+
+    <title>{{ category.name }} | REGALBOXX</title>
+
+    <meta
+        name="description"
+        content="{% if category.description %}{{ category.description }}{% else %}Descubrí nuestra colección {{ category.name }}: Boxes premium armadas a mano, listas para regalar.{% endif %}">
+
+    <meta property="og:title" content="{{ category.name }} | REGALBOXX">
+    <meta property="og:description" content="{% if category.description %}{{ category.description }}{% else %}Descubrí nuestra colección {{ category.name }}: Boxes premium armadas a mano, listas para regalar.{% endif %}">
+    <meta property="og:type" content="website">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+
+        tailwind.config = {
+
+            theme: {
+
+                container: {
+
+                    center: true,
+
+                    padding: {
+
+                        DEFAULT: "1.5rem",
+
+                        sm: "2rem",
+
+                        lg: "2rem",
+
+                        xl: "2.5rem",
+
+                        "2xl": "3rem"
+
+                    }
+
+                },
+
+                extend: {
+
+                    fontFamily: {
+
+                        sans: [
+                            "Inter",
+                            "sans-serif"
+                        ],
+
+                        display: [
+                            "Cormorant Garamond",
+                            "serif"
+                        ]
+
+                    },
+
+                    colors: {
+
+                        primary: "#C60018",
+
+                        pink: "#F989A2",
+
+                        pinkLight: "#FCE4EC",
+
+                        pinkSoft: "#FFD7E2",
+
+                        line: "#F3B8C8",
+
+                        dark: "#C60018"
+
+                    },
+
+                    boxShadow: {
+
+                        card:
+                            "0 1px 2px rgba(0,0,0,.03), 0 18px 60px rgba(0,0,0,.06)",
+
+                        cardHover:
+                            "0 10px 30px rgba(0,0,0,.08),0 35px 90px rgba(0,0,0,.12)",
+
+                        glass:
+                            "0 10px 40px rgba(0,0,0,.08)",
+
+                        button:
+                            "0 10px 25px rgba(17,17,17,.12)"
+
+                    },
+
+                    transitionTimingFunction: {
+
+                        premium:
+                            "cubic-bezier(.22,.61,.36,1)"
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    </script>
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cormorant+Garamond:wght@500;600;700&display=swap"
+          rel="stylesheet">
+
+    <style>
+
+        html{
+
+            scroll-behavior:smooth;
+
+        }
+
+        body{
+
+            font-family:Inter,sans-serif;
+
+            background:#F989A2;
+            color:#C60018;
+
+            text-rendering:optimizeLegibility;
+
+            -webkit-font-smoothing:antialiased;
+
+            overflow-x:hidden;
+
+        }
+
+        *{
+
+            -webkit-tap-highlight-color:transparent;
+
+        }
+
+        ::selection{
+
+            background:#C60018;
+
+            color:white;
+
+        }
+        img{
+
+            user-select:none;
+
+            pointer-events:none;
+
+        }
+
+        .section{
+
+            padding-top:7rem;
+
+            padding-bottom:7rem;
+
+        }
+
+        @media(min-width:1024px){
+
+            .section{
+
+                padding-top:9rem;
+
+                padding-bottom:9rem;
+
+            }
+
+        }
+
+        .section-title{
+
+            font-family:"Cormorant Garamond",serif;
+
+            font-size:clamp(2.3rem,5vw,4.25rem);
+
+            line-height:1;
+
+            letter-spacing:-.03em;
+
+            font-weight:600;
+
+        }
+
+        .section-subtitle{
+
+            display:inline-flex;
+
+            align-items:center;
+
+            gap:.65rem;
+
+            font-size:.72rem;
+
+            letter-spacing:.35em;
+
+            text-transform:uppercase;
+
+            color:#C60018;
+            
+
+            font-weight:600;
+
+        }
+
+        .section-subtitle::before{
+
+            content:"";
+
+            width:34px;
+
+            height:1px;
+
+            background:#C60018;
+
+        }
+
+        .premium-button{
+
+            display:inline-flex;
+
+            align-items:center;
+
+            justify-content:center;
+
+            gap:.75rem;
+
+            border-radius:999px;
+
+            padding:1rem 1.8rem;
+
+            font-size:.95rem;
+
+            font-weight:600;
+
+            transition:.45s cubic-bezier(.22,.61,.36,1);
+
+        }
+
+        .premium-button-primary{
+
+            background:#C60018;
+
+            color:white;
+
+            box-shadow:0 10px 30px rgba(198,0,24,.22);
+
+        }
+
+        .premium-button-primary:hover{
+
+            transform:translateY(-3px);
+
+            box-shadow:0 20px 45px rgba(198,0,24,.22);
+
+        }
+
+        .premium-button-secondary{
+
+            background:white;
+
+            border:1px solid #F338C8;
+
+            color:#C6001B;
+
+        }
+
+        .premium-button-secondary:hover{
+
+            border-color:#C60018;
+
+            transform:translateY(-3px);
+
+        }
+
+        .glass{
+
+            background:rgba(252,228,236,.82);
+
+            backdrop-filter:blur(22px);
+
+            -webkit-backdrop-filter:blur(22px);
+
+            border:1px solid #F3B8C8;
+
+            box-shadow:0 10px 40px rgba(0,0,0,.06);
+
+        }
+
+        .card{
+
+            background:white;
+
+            border:1px solid #F3B8C8;
+
+            box-shadow:0 10px 40px rgba(0,0,0,.04);
+
+            transition:.55s cubic-bezier(.22,.61,.36,1);
+
+        }
+
+        .card:hover{
+
+            transform:translateY(-10px);
+
+            box-shadow:0 30px 70px rgba(0,0,0,.10);
+
+        }
+
+        .hero-image{
+
+            animation:heroFade 1s cubic-bezier(.22,.61,.36,1);
+
+        }
+
+        @keyframes heroFade{
+
+            from{
+
+                opacity:0;
+
+                transform:translateY(50px) scale(.98);
+
+            }
+
+            to{
+
+                opacity:1;
+
+                transform:none;
+
+            }
+
+        }
+
+        .blur-circle{
+
+            position:absolute;
+
+            border-radius:999px;
+
+            filter:blur(120px);
+
+            pointer-events:none;
+
+        }
+
+        .noise{
+
+            position:absolute;
+
+            inset:0;
+
+            opacity:.035;
+
+            background-image:
+            radial-gradient(#000 0.45px,transparent 0.45px);
+
+            background-size:26px 26px;
+
+            pointer-events:none;
+
+        }
+        /* ===========================
+        REVEAL
+        =========================== */
+
+        .reveal{
+
+            opacity:0;
+
+            transform:translateY(40px);
+
+            transition:
+                opacity .8s ease,
+                transform .8s ease;
+
+        }
+
+        .revealed{
+
+            opacity:1;
+
+            transform:none;
+
+        }
+
+
+
+        /* ===========================
+        PRODUCT CARD
+        =========================== */
+
+        .product-card{
+
+            position:relative;
+
+            overflow:hidden;
+
+        }
+
+        .product-card::before{
+
+            content:"";
+
+            position:absolute;
+
+            inset:0;
+
+            background:
+
+                radial-gradient(
+
+                    450px circle at var(--mouse-x) var(--mouse-y),
+
+                    rgba(255,255,255,.18),
+
+                    transparent 45%
+
+                );
+
+            opacity:0;
+
+            transition:.35s;
+
+            pointer-events:none;
+
+        }
+
+        .product-card:hover::before{
+
+            opacity:1;
+
+        }
+    </style>
+
+</head>
+<body class="bg-[#F989A2] text-[#C60018] antialiased">
+
+<div class="fixed inset-0 -z-50 overflow-hidden">
+
+    <div
+        class="blur-circle h-[700px] w-[700px] bg-[#F3A4BE] -top-64 -left-64">
+    </div>
+
+    <div
+        class="blur-circle h-[600px] w-[600px] bg-[#F4BDD0] top-1/2 -right-40">
+    </div>
+
+    <div class="noise"></div>
+
+</div>
+
+<!-- ========================================== -->
+<!-- NAVBAR PREMIUM -->
+<!-- ========================================== -->
+
+<header
+    id="navbar"
+    class="fixed inset-x-0 top-0 z-50 transition-all duration-500">
+
+    <div class="container">
+
+        <div
+            id="navbarContainer"
+            class="mt-5 flex h-16 items-center justify-between rounded-[22px] border border-[#F3B8C8] bg-[#FCE4EC]/95 px-4 backdrop-blur-3xl transition-all duration-500 shadow-[0_8px_35px_rgba(0,0,0,.05)] lg:px-7">
+
+            <!-- LOGO -->
+
+            <a href="/" class="flex items-center">
+
+                <img
+                    src="{% static 'img/logo.png.jfif' %}"
+                    alt="RegalBoxx"
+                    class="h-16 w-auto transition duration-300 hover:scale-105">
+
+            </a>
+
+            <!-- MENU -->
+
+            <nav
+                class="hidden items-center gap-2 lg:flex">
+
+                <a
+                    href="#categorias"
+                    class="rounded-full px-5 py-2 text-[15px] font-medium text-[#C60018] transition-all duration-300 hover:bg-[#FCE4EC] hover:text-[#9F0013]">
+
+                    Categorías
+
+                </a>
+
+                <a
+                    href="#beneficios"
+                    class="rounded-full px-5 py-2 text-[15px] font-medium text-[#C60018] transition-all duration-300 hover:bg-[#FCE4EC] hover:text-[#9F0013]">
+
+                    Nosotros
+
+                </a>
+
+                <a
+                    href="#gift-finder"
+                    class="rounded-full px-5 py-2 text-[15px] font-medium text-[#C60018] transition-all duration-300 hover:bg-[#FCE4EC] hover:text-[#9F0013]">
+
+                    Gift Finder
+
+                </a>
+
+                <a
+                    href="#contacto"
+                    class="rounded-full px-5 py-2 text-[15px] font-medium text-[#C60018] transition-all duration-300 hover:bg-[#FCE4EC] hover:text-[#9F0013]">
+
+                    Contacto
+
+                </a>
+
+            </nav>
+
+            <!-- DERECHA -->
+
+            <div
+                class="flex items-center gap-3">
+
+                <!-- IA -->
+
+                <a
+                    href="#gift-finder"
+                    class="hidden rounded-full border border-[#F3B8C8] bg-white px-5 py-2.5 text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 hover:border-[#C60018] xl:flex hover:bg-[#C60018] hover:text-white">
+
+                    ✨ Encontrar un regalo
+
+                </a>
+
+                <!-- CARRITO -->
+
+                <button
+                    id="openCart"
+                    type="button"
+                    class="relative flex h-11 items-center gap-3 rounded-full border border-[#F3B8C8] bg-white px-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#C60018]">
+
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor">
+
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M3 3h2l.4 2m0 0L7 13h10l2-8H5.4M7 13l-1 5h13M10 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2"/>
+
+                    </svg>
+
+                    <span
+                        class="cart-count absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-[#C60018] text-[10px] font-semibold text-white">
+
+                        {{ cart|length }}
+
+                    </span>
+                </button>
+
+                <!-- MOBILE -->
+
+                <button
+                    id="mobileMenuButton"
+                    class="flex h-11 w-11 items-center justify-center rounded-full border border-[#F3B8C8] bg-white transition-all duration-300 hover:border-[#C60018] lg:hidden">
+
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor">
+
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M4 7h16M4 12h16M4 17h16"/>
+
+                    </svg>
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+<!-- MOBILE MENU -->
+
+<div
+    id="mobileMenu"
+    class="fixed inset-0 z-40 hidden bg-[#C60018]/20 backdrop-blur-sm lg:hidden">
+
+    <div
+        class="absolute right-4 left-4 top-24 rounded-3xl bg-[#F989A2] p-8 shadow-2xl">
+
+        <nav
+            id="mobileMenuContent"
+            class="flex flex-col gap-6">
+
+            <a
+                href="#categorias"
+                class="text-lg font-medium">
+
+                Categorías
+
+            </a>
+
+            <a
+                href="#destacados"
+                class="text-lg font-medium">
+
+                Boxes
+
+            </a>
+
+            <a
+                href="#beneficios"
+                class="text-lg font-medium">
+
+                Beneficios
+
+            </a>
+
+            <a
+                href="#contacto"
+                class="text-lg font-medium">
+
+                Contacto
+
+            </a>
+
+        </nav>
+
+    </div>
+
+</div>
+<!-- ========================================== -->
+<!-- CATEGORY COVER -->
+<!-- ========================================== -->
+
+<section
+    class="reveal section relative overflow-hidden"
+    style="background:#F989A2;">
+
+    <!-- Glow -->
+
+    <div
+        class="absolute inset-0 pointer-events-none">
+
+        <div
+            class="absolute -left-20 top-0 h-80 w-80 rounded-full bg-[#F3A4BE] opacity-70 blur-[120px]">
+        </div>
+
+        <div
+            class="absolute right-0 bottom-0 h-96 w-96 rounded-full bg-[#F989A2] opacity-80 blur-[130px]">
+        </div>
+
+    </div>
+
+    <div
+        class="container relative">
+
+        <!-- Breadcrumb -->
+
+        <a
+            href="{% url 'home' %}"
+            class="inline-flex items-center gap-3 text-sm text-[#9E3949] transition hover:text-[#C60018]">
+
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 class="h-4 w-4"
+                 fill="none"
+                 viewBox="0 0 24 24"
+                 stroke="currentColor">
+
+                <path stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M15 19l-7-7 7-7"/>
+
+            </svg>
+
+            Volver al inicio
+
+        </a>
+
+        <!-- Cover -->
+
+        <div
+            class="mt-10 overflow-hidden rounded-[38px] bg-white shadow-[0_25px_70px_rgba(0,0,0,.08)]">
+
+            <div
+                class="relative h-[340px] sm:h-[420px] lg:h-[480px]">
+
+                {% if category.image %}
+
+                <img
+                    src="{{ category.image.url }}"
+                    alt="{{ category.name }}"
+                    class="absolute inset-0 h-full w-full object-cover">
+
+                {% endif %}
+
+                <!-- Overlay -->
+
+                <div
+                    class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-transparent">
+                </div>
+
+                <!-- Contenido -->
+
+                <div
+                    class="absolute bottom-0 left-0 w-full p-6 sm:p-8 lg:p-14">
+
+                    <span
+                        class="inline-flex rounded-full bg-white/15 px-5 py-2 text-[11px] font-semibold uppercase tracking-[.35em] text-white backdrop-blur-xl">
+
+                        Colección
+
+                    </span>
+
+                    <h1
+                        class="mt-4 font-display text-4xl text-white sm:text-5xl lg:text-7xl">
+
+                        {{ category.name }}
+
+                    </h1>
+
+                    <p
+                        class="mt-4 max-w-xl text-base leading-7 text-white/85 lg:text-lg lg:leading-9">
+
+                        {{ category.description|default:"Descubrí una colección cuidadosamente preparada para regalar momentos inolvidables." }}
+
+                    </p>
+
+                    <div
+                        class="mt-6 flex items-center gap-6">
+
+                        <div>
+
+                            <span
+                                class="text-4xl font-semibold text-white">
+
+                                {{ boxes|length }}
+
+                            </span>
+
+                            <p
+                                class="mt-2 text-sm text-white/70">
+
+                                Boxes disponibles
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ========================================== -->
+<!-- GRID -->
+<!-- ========================================== -->
+
+<section
+    class="reveal section relative overflow-hidden"
+    style="background:#F989A2;">
+
+    <div
+        class="container">
+
+        <div
+            class="mb-10 flex flex-col gap-4 text-center lg:mb-14 lg:flex-row lg:items-center lg:justify-between lg:text-left">
+
+            <div>
+
+                <span
+                    class="section-subtitle">
+
+                    Colección
+
+                </span>
+
+                <h2
+                    class="section-title mt-4">
+
+                    Elegí tu Box
+
+                </h2>
+
+            </div>
+
+            <span
+                class="text-sm text-[#9E3949]">
+
+                {{ boxes|length }} resultados
+
+            </span>
+
+        </div>
+
+        <div
+            class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {% for box in boxes %}
+
+<a
+    href="{% url 'giftbox_detail' box.slug %}"
+    class="product-card revealed group flex flex-col overflow-hidden rounded-[32px] border border-[#ECE8E3] bg-white transition-all duration-500 hover:-translate-y-2 hover:border-[#D8CCBF] hover:shadow-[0_25px_70px_rgba(0,0,0,.08)]">
+
+    <!-- Imagen -->
+
+    <div
+        class="relative overflow-hidden bg-[#FCE4EC]">
+
+        {% if box.image %}
+
+        <img
+            src="{{ box.image.url }}"
+            alt="{{ box.name }}"
+            class="aspect-[4/5] w-full object-cover transition duration-700 group-hover:scale-105">
+
+        {% else %}
+
+        <div
+            class="aspect-[4/5] bg-[#FCE4EC]">
+        </div>
+
+        {% endif %}
+
+        <!-- Badge -->
+
+        {% if box.featured %}
+
+        <div
+            class="absolute left-6 top-6">
+
+            <span
+                class="rounded-full bg-white/90 px-4 py-2 text-[11px] font-semibold uppercase tracking-[.28em] backdrop-blur-xl">
+
+                ⭐ La más elegida
+
+            </span>
+
+        </div>
+
+        {% endif %}
+
+        {% if not box.has_stock %}
+
+        <div
+            class="absolute right-6 top-6">
+
+            <span
+                class="rounded-full bg-zinc-800/90 px-4 py-2 text-[11px] font-semibold uppercase tracking-[.28em] text-white backdrop-blur-xl">
+
+                Sin stock
+
+            </span>
+
+        </div>
+
+        {% endif %}
+
+        <!-- Gradient -->
+
+        <div
+            class="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/25 via-transparent to-transparent opacity-0 transition duration-500 group-hover:opacity-100">
+        </div>
+
+    </div>
+
+    <!-- Información -->
+
+    <div
+        class="flex flex-1 flex-col p-6 lg:p-8">
+
+        <span
+            class="text-[11px] font-semibold uppercase tracking-[.30em] text-[#C60018]">
+
+            {{ category.name }}
+
+        </span>
+
+        <h3
+            class="mt-3 font-display text-3xl leading-none text-[#C60018] transition duration-300 group-hover:text-[#9E0013] lg:text-[2rem]">
+
+            {{ box.name }}
+
+        </h3>
+
+        <p
+            class="mt-5 flex-1 text-[15px] leading-7 text-[#9E3949]">
+
+            {{ box.short_description|truncatechars:95 }}
+
+        </p>
+
+        <!-- Footer Card -->
+
+        <div
+            class="mt-8 flex items-center justify-between border-t border-[#F3B8C8] pt-6">
+
+            <div>
+
+                <span
+                    class="text-[11px] uppercase tracking-[.25em] text-[#9E3949]">
+
+                    Desde
+
+                </span>
+
+                <h4
+                    class="mt-2 text-[28px] font-semibold tracking-[-.03em] lg:text-[32px]">
+
+                    ${{ box.price }}
+
+                </h4>
+
+            </div>
+
+            <div
+                class="flex h-12 w-12 items-center justify-center rounded-full bg-[#FCE4EC] transition-all duration-300 group-hover:translate-x-1 group-hover:bg-[#C60018] group-hover:text-white">
+
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor">
+
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M5 12h14m-6-6 6 6-6 6"/>
+
+                </svg>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</a>
+
+{% empty %}
+
+<div
+    class="col-span-full rounded-[36px] border border-dashed border-[#E7E2DB] bg-[#FCFBF9] p-24 text-center">
+
+    <h3
+        class="font-display text-5xl">
+
+        Todavía no hay boxes
+
+    </h3>
+
+    <p
+        class="mx-auto mt-6 max-w-lg leading-8 text-[#9E3949]">
+
+        Estamos preparando nuevas experiencias para esta colección.
+
+    </p>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+</section>
+<!-- ========================================== -->
+<!-- GIFT FINDER -->
+<!-- ========================================== -->
+
+<section
+    class="reveal section relative overflow-hidden bg-[#F989A2]">
+
+    <div
+        class="absolute inset-0">
+
+        <div
+            class="absolute left-1/2 top-0 h-96 w-96 -translate-x-1/2 rounded-full bg-[#F3A4BE] blur-[130px] opacity-70">
+        </div>
+
+    </div>
+
+    <div
+        class="container relative">
+
+        <div
+            class="mx-auto max-w-4xl rounded-[36px] border border-[#F3B8C8] bg-[#FFFDFE] p-10 shadow-card lg:p-16">
+
+            <div
+                class="text-center">
+
+                <span
+                    class="inline-flex items-center rounded-full bg-[#FCE4EC] px-5 py-2 text-xs font-semibold uppercase tracking-[.35em] text-[#C60018]">
+
+                    ✨ GIFT FINDER CON IA
+
+                </span>
+
+                <h2
+                    class="mx-auto mt-8 max-w-2xl font-display text-5xl leading-tight text-[#C60018]">
+
+                    Conocé a Regi, tu asistente de regalos
+
+                </h2>
+
+                <p
+                    class="mx-auto mt-6 max-w-2xl text-lg leading-9 text-[#9E3949]">
+
+                    Regi charla con vos como si fuera alguien de la tienda:
+                    contale para quién es, la ocasión y tu presupuesto,
+                    y en segundos te recomienda la Box perfecta de
+                    nuestro catálogo.
+
+                </p>
+
+                <div
+                    class="mt-10 flex flex-wrap items-center justify-center gap-3">
+
+                    <span
+                        class="rounded-full bg-[#FCE4EC] px-4 py-2 text-sm">
+
+                        🎂 Cumpleaños
+
+                    </span>
+
+                    <span
+                        class="rounded-full bg-[#FCE4EC] px-4 py-2 text-sm">
+
+                        ❤️ Parejas
+
+                    </span>
+
+                    <span
+                        class="rounded-full bg-[#FCE4EC] px-4 py-2 text-sm">
+
+                        🏢 Empresas
+
+                    </span>
+
+                    <span
+                        class="rounded-full bg-[#FCE4EC] px-4 py-2 text-sm">
+
+                        🍫 Dulces
+
+                    </span>
+
+                </div>
+
+                <div
+                    class="mt-12">
+
+                    <button
+                        type="button"
+                        data-gift-finder-trigger
+                        class="premium-button premium-button-primary px-10">
+
+                        Chatear con Regi
+
+                    </button>
+
+                </div>
+
+                <p
+                    class="mt-6 text-sm text-[#B75B6E]">
+
+                    Charla en segundos · Recomendación con inteligencia artificial
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ========================================== -->
+<!-- FOOTER -->
+<!-- ========================================== -->
+
+<footer
+    id="contacto"
+    class="bg-[#F989A2]">
+
+    <div
+    class="container">
+
+    <div
+        class="grid grid-cols-1 gap-12 py-14 text-center sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1fr] lg:gap-10 lg:py-20 lg:text-left">
+
+        <!-- Marca -->
+
+        <div
+            class="mx-auto max-w-sm lg:mx-0">
+
+            <img
+                src="{% static 'img/logo.png.jfif' %}"
+                alt="RegalBoxx"
+                class="mx-auto h-20 w-auto lg:mx-0">
+
+            <p
+                class="mt-6 leading-8 text-[#9E3949]">
+
+                Diseñamos experiencias para regalar.
+                Boxes premium preparadas con productos
+                cuidadosamente seleccionados.
+
+            </p>
+
+        </div>
+
+        <!-- Navegación -->
+
+        <div>
+
+            <h4
+                class="mb-6 text-sm font-semibold uppercase tracking-[.30em] text-[#C60018]">
+
+                Navegación
+
+            </h4>
+
+            <nav
+                class="space-y-4">
+
+                <a
+                    href="/"
+                    class="block transition text-[#9E3949] hover:text-[#C60018]">
+
+                    Inicio
+
+                </a>
+
+                <a
+                    href="#categorias"
+                    class="block transition text-[#9E3949] hover:text-[#C60018]">
+
+                    Categorías
+
+                </a>
+
+                <a
+                    href="#beneficios"
+                    class="block transition text-[#9E3949] hover:text-[#C60018]">
+
+                    Nosotros
+
+                </a>
+
+            </nav>
+
+        </div>
+
+        <!-- Contacto -->
+
+        <div>
+
+            <h4
+                class="mb-6 text-sm font-semibold uppercase tracking-[.30em] text-[#C60018]">
+
+                Contacto
+
+            </h4>
+
+            <div
+                class="space-y-4 text-[#9E3949]">
+
+                <p>
+
+                    La Plata, Buenos Aires
+
+                </p>
+
+                <p>
+
+                    contacto@regalbox.com.ar
+
+                </p>
+
+                <p>
+
+                    +54 221 XXX XXXX
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- Redes -->
+
+        <div>
+
+            <h4
+                class="mb-6 text-sm font-semibold uppercase tracking-[.30em] text-[#C60018]">
+
+                Seguinos
+
+            </h4>
+
+            <div
+                class="flex flex-wrap justify-center gap-3 lg:justify-start">
+
+                <a
+                    href="https://instagram.com/regalboxx"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="rounded-full border border-[#F3B8C8] bg-white px-5 py-3 text-[#C60018] transition-all duration-300 hover:-translate-y-1 hover:border-[#C60018] hover:bg-[#C60018] hover:text-white">
+
+                    📷 @regalboxx
+
+                </a>
+
+                <a
+                    href="https://wa.me/5492216816529"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="rounded-full border border-[#F3B8C8] bg-white px-5 py-3 text-[#C60018] transition-all duration-300 hover:-translate-y-1 hover:border-[#C60018] hover:bg-[#C60018] hover:text-white">
+
+                    💬 WhatsApp
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div
+        class="flex flex-col gap-4 border-t border-[#F3B8C8] py-8 text-sm text-[#9E3949] md:flex-row md:justify-between">
+
+        <p>
+
+            © 2026 REGALBOXX · Todos los derechos reservados.
+
+        </p>
+
+        <p class="text-[#9E3949]">
+
+            Diseñado y desarrollado por
+
+            <a
+                href="https://impulsastudiodigital.com.ar"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="font-medium text-[#C60018] transition hover:text-[#9E0013]">
+
+                Impulsa Studio Digital
+
+            </a>
+
+        </p>
+
+    </div>
+
+</div>
+
+<!-- ========================================== -->
+<!-- CART DRAWER -->
+<!-- ========================================== -->
+
+<div
+    id="cartOverlay"
+    class="fixed inset-0 z-[90] hidden bg-black/35 opacity-0 backdrop-blur-sm transition-all duration-500">
+</div>
+
+<aside
+    id="cartDrawer"
+    class="fixed right-0 top-0 z-[100] flex h-screen w-full max-w-[460px] translate-x-full flex-col bg-[#F989A2] transition-all duration-500">
+
+    <!-- HEADER -->
+
+    <div
+        class="border-b border-[#F3B8C8] px-8 py-7">
+
+        <div
+            class="flex items-center justify-between">
+
+            <div>
+
+                <span
+                    class="text-[11px] font-semibold uppercase tracking-[.32em] text-[#C60018]">
+
+                    REGALBOXX
+
+                </span>
+
+                <h2
+                    class="mt-2 font-display text-[42px] leading-none text-[#C60018]">
+
+                    Tu carrito
+
+                </h2>
+
+            </div>
+
+            <button
+                id="closeCart"
+                class="flex h-12 w-12 items-center justify-center rounded-full border border-[#F3B8C8] bg-white text-[#C60018] transition-all duration-300 hover:rotate-90 hover:bg-[#C60018] hover:text-white">
+
+                ✕
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- ITEMS -->
+
+    <div
+        id="cartItems"
+        class="reveal flex-1 overflow-y-auto px-8 py-8">
+
+        <div
+            class="flex h-full flex-col items-center justify-center text-center">
+
+            <div
+                class="mb-8 flex h-24 w-24 items-center justify-center rounded-full bg-[#FCE4EC]">
+
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-10 w-10 text-[#C60018]"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor">
+
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.8"
+                        d="M3 3h2l.4 2m0 0L7 13h10l2-8H5.4"/>
+
+                </svg>
+
+            </div>
+
+            <h3
+                class="font-display text-5xl text-[#C60018]">
+
+                Tu carrito está vacío
+
+            </h3>
+
+            <p
+                class="mt-6 max-w-xs leading-8 text-[#9E3949]">
+
+                Agregá una Box y prepará un regalo inolvidable.
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+
+    <div
+        class="reveal border-t border-[#F3B8C8] p-8">
+
+        <div
+            class="mb-8 flex items-center justify-between">
+
+            <span
+                class="text-lg text-[#9E3949]">
+
+                Total
+
+            </span>
+
+            <strong
+                id="cartTotal"
+                class="text-[34px] text-[#C60018]">
+
+                $0
+
+            </strong>
+
+        </div>
+
+        <button
+            id="checkoutButton"
+            class="flex h-16 w-full items-center justify-center rounded-full bg-[#C60018] text-white transition-all duration-300 hover:-translate-y-1 hover:bg-[#9E0013] hover:shadow-[0_25px_60px_rgba(198,0,24,.25)]">
+
+            Finalizar compra
+
+        </button>
+
+    </div>
+
+</aside>
+
+<script src="{% static 'js/home.js' %}"></script>
+<script src="{% static 'js/navbar2.js' %}"></script>
+<script src="{% static 'js/cart2.js' %}"></script>
+<script src="{% static 'js/animations.js' %}"></script>
+<script src="{% static 'js/gift-finder.js' %}"></script>
+<script src="{% static 'js/category.js' %}"></script>
+
+</body>
+</html>

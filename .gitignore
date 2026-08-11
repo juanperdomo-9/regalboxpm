@@ -1,0 +1,17 @@
+# Secretos / entorno local
+.env
+production_secret_key.txt
+
+# Python
+__pycache__/
+*.pyc
+venv/
+
+# Django
+db.sqlite3
+staticfiles/
+media/
+gift_finder_errors.log
+
+# Node
+node_modules/
