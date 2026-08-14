@@ -1,4 +1,4 @@
-{% load static %}
+{% load static l10n %}
 <!DOCTYPE html>
 <html lang="es" class="scroll-smooth">
 
@@ -14,16 +14,39 @@
 
     <link rel="icon" href="{% static 'img/favicon.svg' %}" type="image/svg+xml">
 
-    <title>{% if giftbox.meta_title %}{{ giftbox.meta_title }}{% else %}{{ giftbox.name }} | REGALBOXX{% endif %}</title>
+    <title>{% if giftbox.meta_title %}{{ giftbox.meta_title }}{% else %}{{ giftbox.name }} | REGALBOX PM{% endif %}</title>
 
     <meta
         name="description"
         content="{% if giftbox.meta_description %}{{ giftbox.meta_description }}{% else %}{{ giftbox.short_description }}{% endif %}">
 
-    <meta property="og:title" content="{% if giftbox.meta_title %}{{ giftbox.meta_title }}{% else %}{{ giftbox.name }} | REGALBOXX{% endif %}">
+    <meta property="og:title" content="{% if giftbox.meta_title %}{{ giftbox.meta_title }}{% else %}{{ giftbox.name }} | REGALBOX PM{% endif %}">
     <meta property="og:description" content="{% if giftbox.meta_description %}{{ giftbox.meta_description }}{% else %}{{ giftbox.short_description }}{% endif %}">
     <meta property="og:image" content="{{ giftbox.image.url }}">
     <meta property="og:type" content="product">
+    <link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}{% url 'giftbox_detail' giftbox.slug %}">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org/",
+        "@type": "Product",
+        "name": "{{ giftbox.name|escapejs }}",
+        "image": "{{ giftbox.image.url|escapejs }}",
+        "description": "{{ giftbox.short_description|escapejs }}",
+        {% if giftbox.sku %}"sku": "{{ giftbox.sku|escapejs }}",{% endif %}
+        "brand": {
+            "@type": "Brand",
+            "name": "REGALBOX PM"
+        },
+        "offers": {
+            "@type": "Offer",
+            "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'giftbox_detail' giftbox.slug %}",
+            "priceCurrency": "MXN",
+            "price": "{{ giftbox.price|unlocalize }}",
+            "availability": "{% if giftbox.has_stock %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}"
+        }
+    }
+    </script>
 
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -548,8 +571,8 @@
             <a href="/" class="flex items-center">
 
                 <img
-                    src="{% static 'img/logo.png.jfif' %}"
-                    alt="RegalBoxx"
+                    src="{% static 'img/logo.jpg' %}"
+                    alt="REGALBOX PM"
                     class="h-16 w-auto transition duration-300 hover:scale-105">
 
             </a>
@@ -1175,7 +1198,7 @@
             <span
                 class="section-subtitle">
 
-                DESCUBRÍ LA EXPERIENCIA
+                DESCUBRE LA EXPERIENCIA
 
             </span>
 
@@ -1269,7 +1292,7 @@
                     <span
                         class="section-subtitle">
 
-                        LA EXPERIENCIA REGALBOXX
+                        LA EXPERIENCIA REGALBOX PM
 
                     </span>
 
@@ -1424,7 +1447,7 @@
                 class="max-w-md text-[15px] leading-8 text-[#9E3949]">
 
                 Cada colección tiene experiencias únicas para regalar.
-                Descubrí otras Boxes seleccionadas especialmente para vos.
+                Descubre otras Boxes seleccionadas especialmente para ti.
 
             </p>
 
@@ -1569,7 +1592,7 @@
             <p
                 class="mt-10 font-display text-4xl tracking-[-.04em]">
 
-                REGALBOXX
+                REGALBOX PM
 
             </p>
 
@@ -1613,15 +1636,15 @@
                 <h2
                     class="mx-auto mt-8 max-w-2xl font-display text-5xl leading-tight text-[#C60018]">
 
-                    Conocé a Regi, tu asistente de regalos
+                    Conoce a Jezz, tu asistente de regalos
 
                 </h2>
 
                 <p
                     class="mx-auto mt-6 max-w-2xl text-lg leading-9 text-[#9E3949]">
 
-                    Regi charla con vos como si fuera alguien de la tienda:
-                    contale para quién es, la ocasión y tu presupuesto,
+                    Jezz platica contigo como si fuera alguien de la tienda:
+                    cuéntale para quién es, la ocasión y tu presupuesto,
                     y en segundos te recomienda la Box perfecta de
                     nuestro catálogo.
 
@@ -1668,7 +1691,7 @@
                         data-gift-finder-trigger
                         class="premium-button premium-button-primary px-10">
 
-                        Chatear con Regi
+                        Chatear con Jezz
 
                     </button>
 
@@ -1709,8 +1732,8 @@
             class="mx-auto max-w-sm lg:mx-0">
 
             <img
-                src="{% static 'img/logo.png.jfif' %}"
-                alt="RegalBoxx"
+                src="{% static 'img/logo.jpg' %}"
+                alt="REGALBOX PM"
                 class="mx-auto h-20 w-auto lg:mx-0">
 
             <p
@@ -1782,19 +1805,13 @@
 
                 <p>
 
-                    La Plata, Buenos Aires
+                    Riviera Maya, Quintana Roo
 
                 </p>
 
                 <p>
 
-                    contacto@regalbox.com.ar
-
-                </p>
-
-                <p>
-
-                    +54 221 XXX XXXX
+                    +52 998 347 9615
 
                 </p>
 
@@ -1809,7 +1826,7 @@
             <h4
                 class="mb-6 text-sm font-semibold uppercase tracking-[.30em] text-[#C60018]">
 
-                Seguinos
+                Síguenos
 
             </h4>
 
@@ -1817,17 +1834,17 @@
                 class="flex flex-wrap justify-center gap-3 lg:justify-start">
 
                 <a
-                    href="https://instagram.com/regalboxx"
+                    href="https://instagram.com/regalboxpm"
                     target="_blank"
                     rel="noopener noreferrer"
                     class="rounded-full border border-[#F3B8C8] bg-white px-5 py-3 text-[#C60018] transition-all duration-300 hover:-translate-y-1 hover:border-[#C60018] hover:bg-[#C60018] hover:text-white">
 
-                    📷 @regalboxx
+                    📷 @regalboxpm
 
                 </a>
 
                 <a
-                    href="https://wa.me/5492216816529"
+                    href="https://wa.me/529983479615"
                     target="_blank"
                     rel="noopener noreferrer"
                     class="rounded-full border border-[#F3B8C8] bg-white px-5 py-3 text-[#C60018] transition-all duration-300 hover:-translate-y-1 hover:border-[#C60018] hover:bg-[#C60018] hover:text-white">
@@ -1847,7 +1864,7 @@
 
         <p>
 
-            © 2026 REGALBOXX · Todos los derechos reservados.
+            © 2026 REGALBOX PM · Todos los derechos reservados.
 
         </p>
 
@@ -1897,7 +1914,7 @@
                 <span
                     class="text-[11px] font-semibold uppercase tracking-[.32em] text-[#C60018]">
 
-                    REGALBOXX
+                    REGALBOX PM
 
                 </span>
 
@@ -1961,7 +1978,7 @@
             <p
                 class="mt-6 max-w-xs leading-8 text-[#9E3949]">
 
-                Agregá una Box y prepará un regalo inolvidable.
+                Agrega una Box y prepara un regalo inolvidable.
 
             </p>
 

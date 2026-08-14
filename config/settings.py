@@ -39,13 +39,15 @@ SECRET_KEY = os.environ.get(
 # no definir la variable) en el panel del hosting.
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-# Dominios permitidos, separados por coma (ej: "regalboxx.onrender.com,midominio.com").
+# Dominios permitidos, separados por coma (ej: "regalboxpm.onrender.com,midominio.com").
 # En local no hace falta configurarlo.
+# TODO: actualizar con el dominio real de Render una vez creado el servicio.
 ALLOWED_HOSTS = [
-    h.strip()
-    for h in os.environ.get('ALLOWED_HOSTS', '').split(',')
-    if h.strip()
+    "regalboxpm.onrender.com",
+    "localhost",
+    "127.0.0.1",
 ]
+
 
 # Necesario en Django 4+ para aceptar POSTs (login admin, formularios) detrás
 # de HTTPS en el hosting. Mismo formato que ALLOWED_HOSTS pero con esquema.
@@ -72,6 +74,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sitemaps',
     'cloudinary_storage',
     'cloudinary',
     'core',
@@ -158,9 +161,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
-LANGUAGE_CODE = 'es-ar'
+LANGUAGE_CODE = 'es-mx'
 
-TIME_ZONE = 'America/Argentina/Buenos_Aires'
+TIME_ZONE = 'America/Mexico_City'
 
 USE_I18N = True
 
@@ -217,12 +220,13 @@ DEFAULT_FILE_STORAGE = STORAGES['default']['BACKEND']
 
 
 # ==========================================================
-# REGALBOXX
+# REGALBOX PM
 # ==========================================================
 
 # Número de WhatsApp de la tienda (con código de país, sin "+", sin espacios).
-# Formato Argentina para wa.me: 54 9 <código de área> <número>.
-WHATSAPP_NUMBER = '5492216816529'
+# Formato México para wa.me: 52 <10 dígitos>, sin el "1" que llevaba antes
+# para celulares.
+WHATSAPP_NUMBER = '529983479615'
 
 # Los pedidos se numeran como RB-000XXX = id del pedido + este offset,
 # para que la numeración no arranque en "Pedido #1".
@@ -250,8 +254,40 @@ GROQ_API_KEY = os.environ.get('GROQ_API_KEY', '')
 # https://console.groq.com/docs/models y reemplazar acá.
 GIFT_FINDER_MODEL = 'llama-3.3-70b-versatile'
 
-GIFT_FINDER_PERSONA_NAME = 'Regi'
+GIFT_FINDER_PERSONA_NAME = 'Jezz'
 
 # Tope de mensajes del usuario por conversación, para controlar costo
 # y evitar loops largos. Al llegar al tope, se invita a seguir por WhatsApp.
 GIFT_FINDER_MAX_USER_TURNS = 10
+
+
+# ==========================================================
+# LOGGING
+# ==========================================================
+#
+# Por defecto, Django solo imprime los errores 500 a consola cuando
+# DEBUG=True — en producción (DEBUG=False) los traga en silencio salvo
+# que se los mande a un email de admin (que no configuramos). Esto hace
+# que SIEMPRE se impriman a stdout, así aparecen en los "Logs" de Render
+# sin importar DEBUG.
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'INFO',
+        },
+        'django.request': {
+            'handlers': ['console'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+    },
+}

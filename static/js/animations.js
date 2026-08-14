@@ -20,6 +20,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function revealElements() {
 
+    const targets = document.querySelectorAll(".reveal");
+
+    // threshold 0: alcanza con que un solo pixel entre en pantalla.
+    // Con un threshold más alto (ej. 0.15), bloques muy altos —como una
+    // grilla de productos en una sola columna en mobile— nunca llegan a
+    // cubrir ese % del viewport, y el bloque queda con opacidad 0 para
+    // siempre (bug real detectado en "Box Dulces" en iPhone).
     const observer = new IntersectionObserver((entries) => {
 
         entries.forEach(entry => {
@@ -27,6 +34,7 @@ function revealElements() {
             if (entry.isIntersecting) {
 
                 entry.target.classList.add("revealed");
+                observer.unobserve(entry.target);
 
             }
 
@@ -34,15 +42,24 @@ function revealElements() {
 
     }, {
 
-        threshold: 0.15
+        threshold: 0
 
     });
 
-    document.querySelectorAll(".reveal").forEach((el) => {
+    targets.forEach((el) => {
 
         observer.observe(el);
 
     });
+
+    // Red de seguridad: si por lo que sea el observer no revela algo
+    // (bug de navegador, elemento fuera de flujo, etc.), no se queda
+    // invisible para siempre.
+    setTimeout(() => {
+
+        targets.forEach((el) => el.classList.add("revealed"));
+
+    }, 2000);
 
 }
 

@@ -1,6 +1,6 @@
 // ===========================================
 // REGALBOX
-// GIFT FINDER (IA) — "Regi"
+// GIFT FINDER (IA) — "Jezz"
 // ===========================================
 //
 // Se inyecta a sí mismo en el DOM (así no hace falta duplicar el
@@ -19,7 +19,7 @@ let gfOverlay, gfModal, gfPanel, gfMessages, gfInput, gfSendBtn, gfForm;
 let gfWelcomeShown = false;
 let gfWaiting = false;
 
-const GF_WELCOME = "¡Hola! Soy Regi 🎁 Contame para quién es el regalo, para qué ocasión es y si tenés un presupuesto en mente, y te ayudo a encontrar la Box perfecta.";
+const GF_WELCOME = "¡Hola! Soy Jezz 🎁 Cuéntame para quién es el regalo, para qué ocasión es y si tienes un presupuesto en mente, y te ayudo a encontrar la Box perfecta.";
 
 function initGiftFinder() {
 
@@ -83,7 +83,7 @@ function injectGiftFinderMarkup() {
                         </div>
 
                         <div>
-                            <p class="font-display text-2xl leading-none text-[#C60018]">Regi</p>
+                            <p class="font-display text-2xl leading-none text-[#C60018]">Jezz</p>
                             <p class="mt-1 text-xs text-[#9E3949]">Tu asistente de regalos</p>
                         </div>
 
@@ -118,7 +118,7 @@ function injectGiftFinderMarkup() {
                         type="text"
                         maxlength="300"
                         autocomplete="off"
-                        placeholder="Escribile a Regi..."
+                        placeholder="Escríbele a Jezz..."
                         class="flex-1 rounded-full border border-[#F3B8C8] bg-[#FCE4EC] px-5 py-3 text-base outline-none transition focus:border-[#C60018]" style="font-size:16px;">
 
                     <button
@@ -225,7 +225,7 @@ function appendTyping() {
 
     bubble.id = "giftFinderTyping";
     bubble.className = "max-w-[60%] rounded-[20px] rounded-bl-md bg-[#FCE4EC] px-5 py-3 text-sm text-[#7A0010]";
-    bubble.textContent = "Regi está escribiendo...";
+    bubble.textContent = "Jezz está escribiendo...";
 
     gfMessages.appendChild(bubble);
     gfMessages.scrollTop = gfMessages.scrollHeight;

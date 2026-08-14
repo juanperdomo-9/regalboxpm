@@ -3,7 +3,7 @@ from urllib.parse import quote
 from django.conf import settings
 from django.db import transaction
 from django.shortcuts import render, get_object_or_404
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from .cart import Cart
 from .gift_finder import run_gift_finder_turn
 from .models import Category, GiftBox, Order, OrderItem
@@ -56,6 +56,7 @@ def category_detail(request, slug):
     category = get_object_or_404(
         Category,
         slug=slug,
+        coming_soon=False,
     )
 
     boxes = (
@@ -213,7 +214,7 @@ def cart_add(request, pk):
             return JsonResponse(
                 {
                     "success": False,
-                    "error": f"Ya tenés en el carrito todo el stock disponible de {giftbox.name}.",
+                    "error": f"Ya tienes en el carrito todo el stock disponible de {giftbox.name}.",
                 },
                 status=400,
             )
@@ -472,7 +473,7 @@ def checkout_create(request):
 def build_whatsapp_url(order, items):
 
     lines = [
-        "¡Hola REGALBOXX! 👋🎁",
+        "¡Hola REGALBOX PM! 👋🎁",
         "",
         "Quiero hacer un pedido ✨",
         "",
@@ -523,8 +524,8 @@ GIFT_FINDER_SESSION_KEY = "gift_finder_history"
 GIFT_FINDER_RECOMMENDED_KEY = "gift_finder_recommended"
 
 GIFT_FINDER_LIMIT_REPLY = (
-    "¡Charlamos bastante y me encantó ayudarte! 😊 Para cerrar los "
-    "detalles y coordinar todo, seguime por WhatsApp así te atiendo mejor."
+    "¡Platicamos bastante y me encantó ayudarte! 😊 Para cerrar los "
+    "detalles y coordinar todo, escríbeme por WhatsApp así te atiendo mejor."
 )
 
 
@@ -542,7 +543,7 @@ def gift_finder_chat(request):
     if not message:
 
         return JsonResponse(
-            {"success": False, "error": "Escribime algo para poder ayudarte 🙂"},
+            {"success": False, "error": "Escríbeme algo para poder ayudarte 🙂"},
             status=400,
         )
 
@@ -597,3 +598,23 @@ def gift_finder_reset(request):
     request.session.modified = True
 
     return JsonResponse({"success": True})
+
+
+# ==========================================================
+# SEO
+# ==========================================================
+
+def robots_txt(request):
+
+    lines = [
+        "User-agent: *",
+        "Allow: /",
+        "Disallow: /admin/",
+        "Disallow: /cart/",
+        "Disallow: /checkout/",
+        "Disallow: /gift-finder/",
+        "",
+        f"Sitemap: {request.scheme}://{request.get_host()}/sitemap.xml",
+    ]
+
+    return HttpResponse("\n".join(lines), content_type="text/plain")

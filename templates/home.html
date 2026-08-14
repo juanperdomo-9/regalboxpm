@@ -12,16 +12,19 @@
     <meta name="theme-color"
           content="#FCE4EC">
 
+    <!-- TODO: pegar acá el <meta name="google-site-verification"> propio cuando se
+         verifique este dominio en Google Search Console (el original era de regalboxx.com.ar). -->
+
     <link rel="icon" href="{% static 'img/favicon.svg' %}" type="image/svg+xml">
 
-    <title>REGALBOXX | Boxes Premium para Regalar</title>
+    <title>REGALBOX PM | Boxes Premium para Regalar</title>
 
     <meta
         name="description"
-        content="Cajas de regalo premium armadas a mano en La Plata. Elegí tu Box, sumá una dedicatoria y coordiná todo por WhatsApp.">
+        content="Cajas de regalo premium armadas a mano en la Riviera Maya. Elige tu Box, suma una dedicatoria y coordina todo por WhatsApp.">
 
-    <meta property="og:title" content="REGALBOXX | Boxes Premium para Regalar">
-    <meta property="og:description" content="Cajas de regalo premium armadas a mano en La Plata. Elegí tu Box, sumá una dedicatoria y coordiná todo por WhatsApp.">
+    <meta property="og:title" content="REGALBOX PM | Boxes Premium para Regalar">
+    <meta property="og:description" content="Cajas de regalo premium armadas a mano en la Riviera Maya. Elige tu Box, suma una dedicatoria y coordina todo por WhatsApp.">
     <meta property="og:type" content="website">
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -521,8 +524,8 @@
             <a href="/" class="flex items-center">
 
                 <img
-                    src="{% static 'img/logo.png.jfif' %}"
-                    alt="RegalBoxx"
+                    src="{% static 'img/logo.jpg' %}"
+                    alt="REGALBOX PM"
                     class="h-16 w-auto transition duration-300 hover:scale-105">
 
             </a>
@@ -740,7 +743,7 @@
                 <h1
                     class="mt-8 max-w-xl font-display text-5xl font-semibold leading-[0.95] tracking-[-0.04em] text-[#C60018] sm:text-6xl lg:text-7xl"class="mt-8 max-w-xl font-display text-4xl font-semibold leading-[0.95] tracking-[-0.04em] text-[#C60018] sm:text-5xl lg:text-7xl">
 
-                    Regalá momentos
+                    Regala momentos
                     que realmente
                     se recuerdan.
 
@@ -913,7 +916,7 @@
                 class="max-w-md text-[15px] leading-8 text-[#9E3949]">
 
                 Cada colección fue diseñada para transmitir una experiencia distinta.
-                Elegí la categoría y descubrí boxes cuidadosamente preparadas.
+                Elige la categoría y descubre boxes cuidadosamente preparadas.
 
             </p>
 
@@ -926,9 +929,25 @@
 
             {% for category in categories %}
 
-            <a
-                href="{% url 'category_detail' category.slug %}"
-                class="group relative overflow-hidden rounded-[30px] border border-[#F3B8C8] bg-white shadow-card transition-all duration-700 hover:-translate-y-2 hover:shadow-cardHover">
+            <{% if category.coming_soon %}div{% else %}a{% endif %}
+                {% if not category.coming_soon %}href="{% url 'category_detail' category.slug %}"{% endif %}
+                class="group relative overflow-hidden rounded-[30px] border border-[#F3B8C8] bg-white shadow-card transition-all duration-700 {% if not category.coming_soon %}hover:-translate-y-2 hover:shadow-cardHover{% endif %}">
+
+                {% if category.coming_soon %}
+
+                <div class="absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 bg-black/35 backdrop-blur-[2px]">
+
+                    <span class="rounded-full bg-white/90 px-6 py-2.5 text-[11px] font-semibold uppercase tracking-[.30em] text-[#C60018] shadow-lg">
+                        Próximamente
+                    </span>
+
+                    <span class="font-display text-3xl text-white drop-shadow-[0_2px_10px_rgba(0,0,0,.4)]">
+                        {{ category.name }}
+                    </span>
+
+                </div>
+
+                {% endif %}
 
                 <!-- IMAGEN -->
 
@@ -940,7 +959,7 @@
                     <img
                         src="{{ category.image.url }}"
                         alt="{{ category.name }}"
-                        class="h-[240px] sm:h-[300px] lg:h-[330px] w-full object-cover transition-all duration-700 group-hover:scale-110">
+                        class="h-[240px] sm:h-[300px] lg:h-[330px] w-full object-cover transition-all duration-700 {% if category.coming_soon %}scale-105 blur-sm{% else %}group-hover:scale-110{% endif %}">
 
                     <!-- Overlay -->
 
@@ -971,7 +990,7 @@
                     <span
                         class="font-display text-5xl">
 
-                        REGALBOXX
+                        REGALBOX PM
 
                     </span>
 
@@ -1036,7 +1055,7 @@
 
                 </div>
 
-            </a>
+            </{% if category.coming_soon %}div{% else %}a{% endif %}>
 
             {% empty %}
 
@@ -1053,7 +1072,7 @@
                 <p
                     class="mt-5 text-[#A83848]">
 
-                    Crealas desde el panel de administración.
+                    Créalas desde el panel de administración.
 
                 </p>
 
@@ -1234,15 +1253,15 @@
                 <h2
                     class="mx-auto mt-8 max-w-2xl font-display text-5xl leading-tight text-[#C60018]">
 
-                    Conocé a Regi, tu asistente de regalos
+                    Conoce a Jezz, tu asistente de regalos
 
                 </h2>
 
                 <p
                     class="mx-auto mt-6 max-w-2xl text-lg leading-9 text-[#9E3949]">
 
-                    Regi charla con vos como si fuera alguien de la tienda:
-                    contale para quién es, la ocasión y tu presupuesto,
+                    Jezz platica contigo como si fuera alguien de la tienda:
+                    cuéntale para quién es, la ocasión y tu presupuesto,
                     y en segundos te recomienda la Box perfecta de
                     nuestro catálogo.
 
@@ -1289,7 +1308,7 @@
                         data-gift-finder-trigger
                         class="premium-button premium-button-primary px-10">
 
-                        Chatear con Regi
+                        Chatear con Jezz
 
                     </button>
 
@@ -1329,8 +1348,8 @@
             class="mx-auto max-w-sm lg:mx-0">
 
             <img
-                src="{% static 'img/logo.png.jfif' %}"
-                alt="RegalBoxx"
+                src="{% static 'img/logo.jpg' %}"
+                alt="REGALBOX PM"
                 class="mx-auto h-20 w-auto lg:mx-0">
 
             <p
@@ -1402,19 +1421,13 @@
 
                 <p>
 
-                    La Plata, Buenos Aires
+                    Riviera Maya, Quintana Roo
 
                 </p>
 
                 <p>
 
-                    contacto@regalbox.com.ar
-
-                </p>
-
-                <p>
-
-                    +54 221 XXX XXXX
+                    +52 998 347 9615
 
                 </p>
 
@@ -1429,7 +1442,7 @@
             <h4
                 class="mb-6 text-sm font-semibold uppercase tracking-[.30em] text-[#C60018]">
 
-                Seguinos
+                Síguenos
 
             </h4>
 
@@ -1437,17 +1450,17 @@
                 class="flex flex-wrap justify-center gap-3 lg:justify-start">
 
                 <a
-                    href="https://instagram.com/regalboxx"
+                    href="https://instagram.com/regalboxpm"
                     target="_blank"
                     rel="noopener noreferrer"
                     class="rounded-full border border-[#F3B8C8] bg-white px-5 py-3 text-[#C60018] transition-all duration-300 hover:-translate-y-1 hover:border-[#C60018] hover:bg-[#C60018] hover:text-white">
 
-                    📷 @regalboxx
+                    📷 @regalboxpm
 
                 </a>
 
                 <a
-                    href="https://wa.me/5492216816529"
+                    href="https://wa.me/529983479615"
                     target="_blank"
                     rel="noopener noreferrer"
                     class="rounded-full border border-[#F3B8C8] bg-white px-5 py-3 text-[#C60018] transition-all duration-300 hover:-translate-y-1 hover:border-[#C60018] hover:bg-[#C60018] hover:text-white">
@@ -1467,7 +1480,7 @@
 
         <p>
 
-            © 2026 REGALBOXX · Todos los derechos reservados.
+            © 2026 REGALBOX PM · Todos los derechos reservados.
 
         </p>
 
@@ -1517,7 +1530,7 @@
                 <span
                     class="text-[11px] font-semibold uppercase tracking-[.32em] text-[#C60018]">
 
-                    REGALBOXX
+                    REGALBOX PM
 
                 </span>
 
@@ -1581,7 +1594,7 @@
             <p
                 class="mt-6 max-w-xs leading-8 text-[#9E3949]">
 
-                Agregá una Box y prepará un regalo inolvidable.
+                Agrega una Box y prepara un regalo inolvidable.
 
             </p>
 

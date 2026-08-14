@@ -37,6 +37,12 @@ class Category(models.Model):
         default=True
     )
 
+    coming_soon = models.BooleanField(
+        default=False,
+        verbose_name="Próximamente",
+        help_text="Se muestra borrosa con un cartel de 'Próximamente' y no se puede abrir todavía."
+    )
+
     class Meta:
         ordering = ["order", "name"]
         verbose_name = "Categoría"
@@ -106,13 +112,6 @@ class GiftItem(models.Model):
 
     name = models.CharField(
         max_length=150
-    )
-
-    image = models.ImageField(
-        upload_to="gift-items/",
-        max_length=255,
-        blank=True,
-        null=True
     )
 
     description = models.TextField(

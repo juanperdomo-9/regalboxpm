@@ -172,7 +172,7 @@ function renderCart(data) {
 
                 <p class="mt-3 text-zinc-500">
 
-                    Agregá una Box para comenzar.
+                    Agrega una Box para comenzar.
 
                 </p>
 
