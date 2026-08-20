@@ -398,7 +398,7 @@ def checkout_create(request):
         return JsonResponse(
             {
                 "success": False,
-                "error": "Completá nombre, origen y ubicación para poder coordinar el envío.",
+                "error": "Completa nombre, origen y ubicación para poder coordinar el envío.",
             },
             status=400,
         )
@@ -415,7 +415,7 @@ def checkout_create(request):
             return JsonResponse(
                 {
                     "success": False,
-                    "error": f"Solo quedan {gift_box.stock} unidad(es) de {gift_box.name}. Ajustá tu carrito para continuar.",
+                    "error": f"Solo quedan {gift_box.stock} unidad(es) de {gift_box.name}. Ajusta tu carrito para continuar.",
                 },
                 status=400,
             )

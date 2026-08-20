@@ -412,7 +412,7 @@ async function sendGiftFinderMessage() {
     } catch (err) {
 
         removeTyping();
-        appendBubble("assistant", "Ocurrió un error de conexión. Probá de nuevo en un momento.");
+        appendBubble("assistant", "Ocurrió un error de conexión. Prueba de nuevo en un momento.");
 
     } finally {
 

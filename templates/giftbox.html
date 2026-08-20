@@ -156,7 +156,7 @@
             scroll-behavior:smooth;
 
         }
-        <script src="{% static_v 'js/home.js' %}"></script>
+
         body{
 
             font-family:Inter,sans-serif;
@@ -1075,7 +1075,7 @@
                 name="dedication"
                 rows="3"
                 maxlength="150"
-                placeholder="Escribí tu mensaje..."
+                placeholder="Escribe tu mensaje..."
                 class="mt-6 w-full rounded-2xl border border-[#F3B8C8] bg-[#FCE4EC] px-5 py-4 outline-none transition focus:border-[#C60018]"></textarea>
 
             <p
@@ -2098,7 +2098,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(async data=>{
 
             if(!data.success){
-                showMessage(data.error || "No pudimos agregar la Box. Probá de nuevo.", true);
+                showMessage(data.error || "No pudimos agregar la Box. Prueba de nuevo.", true);
                 submitBtn.disabled = false;
                 submitLabel.textContent = "Agregar esta Box";
                 return;
@@ -2125,7 +2125,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         })
         .catch(() => {
-            showMessage("Ocurrió un error de conexión. Probá de nuevo.", true);
+            showMessage("Ocurrió un error de conexión. Prueba de nuevo.", true);
             submitBtn.disabled = false;
             submitLabel.textContent = "Agregar esta Box";
         });

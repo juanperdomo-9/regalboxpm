@@ -825,7 +825,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (!data.success) {
 
-                errorBox.textContent = data.error || "No pudimos crear tu pedido. Probá de nuevo.";
+                errorBox.textContent = data.error || "No pudimos crear tu pedido. Prueba de nuevo.";
                 errorBox.classList.remove("hidden");
                 submitBtn.disabled = false;
                 submitLabel.textContent = "Confirmar pedido por WhatsApp";
@@ -847,7 +847,7 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .catch(() => {
 
-            errorBox.textContent = "Ocurrió un error de conexión. Probá de nuevo.";
+            errorBox.textContent = "Ocurrió un error de conexión. Prueba de nuevo.";
             errorBox.classList.remove("hidden");
             submitBtn.disabled = false;
             submitLabel.textContent = "Confirmar pedido por WhatsApp";
