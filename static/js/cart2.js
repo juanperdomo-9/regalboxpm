@@ -61,13 +61,17 @@ function openCart() {
 
     cartOverlay.classList.remove("hidden");
 
-    requestAnimationFrame(() => {
+    // Fuerza un reflow entre sacar "hidden" y sacar "opacity-0" para que
+    // el navegador registre el estado inicial (display:block, opacity:0)
+    // antes de animar — si no, a veces salta directo al estado final sin
+    // transición. requestAnimationFrame hacía esto mismo pero depende de
+    // que el tab esté "compositando" frames; este reflow es sincrónico
+    // y no depende de eso.
+    void cartOverlay.offsetWidth;
 
-        cartOverlay.classList.remove("opacity-0");
+    cartOverlay.classList.remove("opacity-0");
 
-        cartDrawer.style.transform = "translateX(0)";
-
-    });
+    cartDrawer.style.transform = "translateX(0)";
 
     document.body.classList.add("overflow-hidden");
 

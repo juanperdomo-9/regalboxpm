@@ -1,4 +1,4 @@
-{% load static %}
+{% load cache_bust static %}
 <!DOCTYPE html>
 <html lang="es" class="scroll-smooth">
 
@@ -20,7 +20,7 @@
         name="description"
         content="Finaliza tu pedido de REGALBOX PM y coordina la entrega por WhatsApp.">
 
-    <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://cdn.tailwindcss.com"></script>
 
     <script>
 
@@ -183,7 +183,7 @@
         .blur-circle{
             position:absolute;
             border-radius:999px;
-            filter:blur(120px);
+            filter:blur(50px);
             pointer-events:none;
         }
 
@@ -248,11 +248,11 @@
 <div class="fixed inset-0 -z-50 overflow-hidden">
 
     <div
-        class="blur-circle h-[700px] w-[700px] bg-[#F3A4BE] -top-64 -left-64">
+        class="blur-circle h-[350px] w-[350px] bg-[#F3A4BE] opacity-60 -top-32 -left-32 sm:h-[500px] sm:w-[500px] sm:-top-48 sm:-left-48 lg:h-[700px] lg:w-[700px] lg:-top-64 lg:-left-64">
     </div>
 
     <div
-        class="blur-circle h-[600px] w-[600px] bg-[#F4BDD0] top-1/2 -right-40">
+        class="blur-circle h-[300px] w-[300px] bg-[#F4BDD0] opacity-60 top-1/2 -right-20 sm:h-[450px] sm:w-[450px] sm:-right-32 lg:h-[600px] lg:w-[600px] lg:-right-40">
     </div>
 
     <div class="noise"></div>
@@ -271,7 +271,7 @@
 
         <div
             id="navbarContainer"
-            class="mt-5 flex h-16 items-center justify-between rounded-[22px] border border-[#F3B8C8] bg-[#FCE4EC]/95 px-4 backdrop-blur-3xl transition-all duration-500 shadow-[0_8px_35px_rgba(0,0,0,.05)] lg:px-7">
+            class="mt-5 flex h-16 items-center justify-between rounded-[22px] border border-[#F3B8C8] bg-[#FCE4EC]/95 px-4 backdrop-blur-md transition-all duration-500 shadow-[0_8px_35px_rgba(0,0,0,.05)] lg:px-7">
 
             <!-- LOGO -->
 
@@ -419,11 +419,11 @@
 <section class="reveal relative overflow-hidden bg-[#F989A2] pt-32 pb-24 lg:pt-40 lg:pb-32">
 
     <div
-        class="absolute left-0 top-0 h-96 w-96 rounded-full bg-[#F3A4BE] opacity-70 blur-[140px]">
+        class="absolute left-0 top-0 h-96 w-96 rounded-full bg-[#F3A4BE] opacity-70 blur-[50px]">
     </div>
 
     <div
-        class="absolute right-0 bottom-0 h-[500px] w-[500px] rounded-full bg-[#F989A2] opacity-70 blur-[150px]">
+        class="absolute right-0 bottom-0 h-[500px] w-[500px] rounded-full bg-[#F989A2] opacity-70 blur-[50px]">
     </div>
 
     <div class="container relative">
@@ -789,10 +789,10 @@
 
 </aside>
 
-<script src="{% static 'js/home.js' %}"></script>
-<script src="{% static 'js/navbar2.js' %}"></script>
-<script src="{% static 'js/cart2.js' %}"></script>
-<script src="{% static 'js/animations.js' %}"></script>
+<script src="{% static_v 'js/home.js' %}"></script>
+<script src="{% static_v 'js/navbar2.js' %}"></script>
+<script src="{% static_v 'js/cart2.js' %}"></script>
+<script src="{% static_v 'js/animations.js' %}"></script>
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {

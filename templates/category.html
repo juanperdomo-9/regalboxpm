@@ -1,4 +1,4 @@
-{% load static %}
+{% load cache_bust static %}
 <!DOCTYPE html>
 <html lang="es" class="scroll-smooth">
 
@@ -24,7 +24,7 @@
     <meta property="og:description" content="{% if category.description %}{{ category.description }}{% else %}Descubre nuestra colección {{ category.name }}: Boxes premium armadas a mano, listas para regalar.{% endif %}">
     <meta property="og:type" content="website">
 
-    <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://cdn.tailwindcss.com"></script>
 
     <script>
 
@@ -360,7 +360,7 @@
 
             border-radius:999px;
 
-            filter:blur(120px);
+            filter:blur(50px);
 
             pointer-events:none;
 
@@ -457,15 +457,16 @@
 
 </head>
 <body class="bg-[#F989A2] text-[#C60018] antialiased">
+{% csrf_token %}
 
 <div class="fixed inset-0 -z-50 overflow-hidden">
 
     <div
-        class="blur-circle h-[700px] w-[700px] bg-[#F3A4BE] -top-64 -left-64">
+        class="blur-circle h-[350px] w-[350px] bg-[#F3A4BE] opacity-60 -top-32 -left-32 sm:h-[500px] sm:w-[500px] sm:-top-48 sm:-left-48 lg:h-[700px] lg:w-[700px] lg:-top-64 lg:-left-64">
     </div>
 
     <div
-        class="blur-circle h-[600px] w-[600px] bg-[#F4BDD0] top-1/2 -right-40">
+        class="blur-circle h-[300px] w-[300px] bg-[#F4BDD0] opacity-60 top-1/2 -right-20 sm:h-[450px] sm:w-[450px] sm:-right-32 lg:h-[600px] lg:w-[600px] lg:-right-40">
     </div>
 
     <div class="noise"></div>
@@ -484,7 +485,7 @@
 
         <div
             id="navbarContainer"
-            class="mt-5 flex h-16 items-center justify-between rounded-[22px] border border-[#F3B8C8] bg-[#FCE4EC]/95 px-4 backdrop-blur-3xl transition-all duration-500 shadow-[0_8px_35px_rgba(0,0,0,.05)] lg:px-7">
+            class="mt-5 flex h-16 items-center justify-between rounded-[22px] border border-[#F3B8C8] bg-[#FCE4EC]/95 px-4 backdrop-blur-md transition-all duration-500 shadow-[0_8px_35px_rgba(0,0,0,.05)] lg:px-7">
 
             <!-- LOGO -->
 
@@ -676,11 +677,11 @@
         class="absolute inset-0 pointer-events-none">
 
         <div
-            class="absolute -left-20 top-0 h-80 w-80 rounded-full bg-[#F3A4BE] opacity-70 blur-[120px]">
+            class="absolute -left-20 top-0 h-80 w-80 rounded-full bg-[#F3A4BE] opacity-70 blur-[50px]">
         </div>
 
         <div
-            class="absolute right-0 bottom-0 h-96 w-96 rounded-full bg-[#F989A2] opacity-80 blur-[130px]">
+            class="absolute right-0 bottom-0 h-96 w-96 rounded-full bg-[#F989A2] opacity-80 blur-[50px]">
         </div>
 
     </div>
@@ -1018,7 +1019,7 @@
         class="absolute inset-0">
 
         <div
-            class="absolute left-1/2 top-0 h-96 w-96 -translate-x-1/2 rounded-full bg-[#F3A4BE] blur-[130px] opacity-70">
+            class="absolute left-1/2 top-0 h-96 w-96 -translate-x-1/2 rounded-full bg-[#F3A4BE] blur-[50px] opacity-70">
         </div>
 
     </div>
@@ -1428,12 +1429,12 @@
 
 </aside>
 
-<script src="{% static 'js/home.js' %}"></script>
-<script src="{% static 'js/navbar2.js' %}"></script>
-<script src="{% static 'js/cart2.js' %}"></script>
-<script src="{% static 'js/animations.js' %}"></script>
-<script src="{% static 'js/gift-finder.js' %}"></script>
-<script src="{% static 'js/category.js' %}"></script>
+<script src="{% static_v 'js/home.js' %}"></script>
+<script src="{% static_v 'js/navbar2.js' %}"></script>
+<script src="{% static_v 'js/cart2.js' %}"></script>
+<script src="{% static_v 'js/animations.js' %}"></script>
+<script src="{% static_v 'js/gift-finder.js' %}"></script>
+<script src="{% static_v 'js/category.js' %}"></script>
 
 </body>
 </html>

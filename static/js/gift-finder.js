@@ -59,6 +59,43 @@ function initGiftFinder() {
         if (e.key === "Escape") closeGiftFinder();
     });
 
+    loadGiftFinderHistory();
+
+}
+
+async function loadGiftFinderHistory() {
+
+    // Recupera la charla ya guardada en la sesión (si la hay) y la
+    // reconstruye en el widget. Sin esto, cuando Jezz recomienda una
+    // Box y la persona hace clic para ver el detalle, el chat se
+    // reiniciaba en blanco en la página nueva y parecía que se había
+    // perdido todo el contexto — aunque el servidor lo seguía teniendo
+    // guardado para la próxima respuesta, visualmente no se notaba.
+
+    try {
+
+        const res = await fetch("/gift-finder/history/");
+        const data = await res.json();
+
+        if (!data.success || !data.history || data.history.length === 0) {
+            return;
+        }
+
+        data.history.forEach(turn => {
+            appendBubble(turn.role === "user" ? "user" : "assistant", turn.content);
+        });
+
+        if (data.recommended_box) {
+            appendBoxCard(data.recommended_box);
+        }
+
+        gfWelcomeShown = true;
+
+    } catch (err) {
+        // Si falla, no pasa nada — simplemente se muestra el saludo
+        // normal la próxima vez que se abra el widget.
+    }
+
 }
 
 function injectGiftFinderMarkup() {

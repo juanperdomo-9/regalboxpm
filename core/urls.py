@@ -105,4 +105,10 @@ urlpatterns = [
         views.gift_finder_reset,
         name="gift_finder_reset",
     ),
+
+    path(
+        "gift-finder/history/",
+        views.gift_finder_history,
+        name="gift_finder_history",
+    ),
 ]

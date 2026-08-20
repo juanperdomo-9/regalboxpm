@@ -1,1 +1,68 @@
 @import "tailwindcss";
+
+@source "../../templates";
+@source "../../core";
+
+/*
+ * REGALBOX PM — tokens que antes vivian en el "tailwind.config" inline
+ * que cada template le pasaba al script del CDN. Se migran acá porque
+ * pasamos a un build compilado (el CDN compila en el navegador en
+ * cada carga de página, lo cual es lento — Tailwind mismo lo desaconseja
+ * para producción).
+ *
+ * La mayoría de los colores del sitio se usan como valores arbitrarios
+ * directos (ej. text-[#C60018]), así que no hace falta declararlos acá.
+ * Sólo estos tokens con nombre se usan de verdad en los templates:
+ * font-display, shadow-card, shadow-cardHover.
+ */
+@theme {
+
+    --font-display: "Cormorant Garamond", serif;
+
+    --shadow-card: 0 1px 2px rgba(0, 0, 0, .03), 0 18px 60px rgba(0, 0, 0, .06);
+    --shadow-cardHover: 0 10px 30px rgba(0, 0, 0, .08), 0 35px 90px rgba(0, 0, 0, .12);
+    --shadow-glass: 0 10px 40px rgba(0, 0, 0, .08);
+    --shadow-button: 0 10px 25px rgba(17, 17, 17, .12);
+
+    --ease-premium: cubic-bezier(.22, .61, .36, 1);
+
+}
+
+/*
+ * Mismo centrado + padding responsive que tenía el container del config
+ * viejo, MÁS los max-width por breakpoint que el .container de Tailwind
+ * trae de fábrica (en v3 los conservaba aunque el config sólo tocara
+ * padding/centering — acá hay que declararlos a mano o el container
+ * queda sin límite de ancho y rompe el layout).
+ */
+@utility container {
+
+    width: 100%;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+
+    @media (width >= theme(--breakpoint-sm)) {
+        max-width: theme(--breakpoint-sm);
+        padding-inline: 2rem;
+    }
+
+    @media (width >= theme(--breakpoint-md)) {
+        max-width: theme(--breakpoint-md);
+    }
+
+    @media (width >= theme(--breakpoint-lg)) {
+        max-width: theme(--breakpoint-lg);
+        padding-inline: 2rem;
+    }
+
+    @media (width >= theme(--breakpoint-xl)) {
+        max-width: theme(--breakpoint-xl);
+        padding-inline: 2.5rem;
+    }
+
+    @media (width >= theme(--breakpoint-2xl)) {
+        max-width: theme(--breakpoint-2xl);
+        padding-inline: 3rem;
+    }
+
+}

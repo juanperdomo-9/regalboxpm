@@ -244,15 +244,16 @@ ORDER_CODE_OFFSET = 510
 GROQ_API_KEY = os.environ.get('GROQ_API_KEY', '')
 
 # Modelo de Groq con soporte de tool-use, dentro de la capa gratuita.
-# Se probó bajar al modelo chico (8B) para tener más cuota diaria, pero
-# usa mal las herramientas (a veces escribe el llamado a la función como
-# texto plano en vez de invocarla de verdad), lo que rompe la
-# recomendación. El 70B es mucho más confiable con tool-calling — la
-# cuota diaria (100k tokens) alcanza de sobra para uso real de la
-# tienda, lo que la agotó hoy fue el testing intensivo, no tráfico real.
-# Si Groq lo discontinúa, revisar el listado vigente en
-# https://console.groq.com/docs/models y reemplazar acá.
-GIFT_FINDER_MODEL = 'llama-3.3-70b-versatile'
+# El que usaba el original (llama-3.3-70b-versatile) fue discontinuado
+# por Groq. Se probaron los modelos vigentes al armar este fork
+# (openai/gpt-oss-120b y openai/gpt-oss-20b) y ninguno de los dos
+# invocaba las herramientas de verdad (respondían con texto plano en
+# vez de llamar a buscar_boxes/recomendar_box). qwen/qwen3.6-27b sí
+# respeta el tool-calling de forma consistente.
+# Si Groq lo discontinúa también, revisar el listado vigente en
+# https://console.groq.com/docs/models y volver a probar cuál invoca
+# las herramientas correctamente antes de reemplazar acá.
+GIFT_FINDER_MODEL = 'qwen/qwen3.6-27b'
 
 GIFT_FINDER_PERSONA_NAME = 'Jezz'
 

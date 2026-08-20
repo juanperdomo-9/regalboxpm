@@ -522,6 +522,7 @@ def build_whatsapp_url(order, items):
 
 GIFT_FINDER_SESSION_KEY = "gift_finder_history"
 GIFT_FINDER_RECOMMENDED_KEY = "gift_finder_recommended"
+GIFT_FINDER_LAST_BOX_KEY = "gift_finder_last_box"
 
 GIFT_FINDER_LIMIT_REPLY = (
     "¡Platicamos bastante y me encantó ayudarte! 😊 Para cerrar los "
@@ -572,6 +573,7 @@ def gift_finder_chat(request):
 
     if result["recommended_box"]:
         request.session[GIFT_FINDER_RECOMMENDED_KEY] = True
+        request.session[GIFT_FINDER_LAST_BOX_KEY] = result["recommended_box"]
 
     request.session.modified = True
 
@@ -581,6 +583,25 @@ def gift_finder_chat(request):
         "recommended_box": result["recommended_box"],
         "whatsapp_url": None,
         "limit_reached": False,
+    })
+
+
+def gift_finder_history(request):
+    """
+    Devuelve la conversación guardada en la sesión (si la hay), para que
+    el widget la pueda reconstruir al reabrirse en otra página — por
+    ejemplo cuando Jezz recomienda una Box y la persona hace clic para
+    ver el detalle: sin esto, el chat se reiniciaba en blanco ahí y se
+    perdía todo el contexto ya charlado.
+    """
+
+    history = request.session.get(GIFT_FINDER_SESSION_KEY, [])
+    last_box = request.session.get(GIFT_FINDER_LAST_BOX_KEY)
+
+    return JsonResponse({
+        "success": True,
+        "history": history,
+        "recommended_box": last_box,
     })
 
 
@@ -595,6 +616,7 @@ def gift_finder_reset(request):
 
     request.session.pop(GIFT_FINDER_SESSION_KEY, None)
     request.session.pop(GIFT_FINDER_RECOMMENDED_KEY, None)
+    request.session.pop(GIFT_FINDER_LAST_BOX_KEY, None)
     request.session.modified = True
 
     return JsonResponse({"success": True})
