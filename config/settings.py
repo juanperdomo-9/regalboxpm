@@ -126,7 +126,13 @@ if os.environ.get('DATABASE_URL'):
     DATABASES = {
         'default': dj_database_url.config(
             default=os.environ.get('DATABASE_URL'),
+            # Neon (Postgres serverless) cierra las conexiones inactivas
+            # del lado del pooler, y con conn_max_age alto Django intenta
+            # reusar una conexión ya muerta -> "SSL connection has been
+            # closed unexpectedly". conn_health_checks hace que Django
+            # verifique (y reabra si hace falta) antes de reusarla.
             conn_max_age=600,
+            conn_health_checks=True,
             ssl_require=True,
         )
     }
